@@ -25,7 +25,7 @@ const posts = allPosts
 
 <BaseLayout
   title={m.nav_blog({}, { locale })}
-  description="Our latest articles, thoughts, and updates."
+  description={m.blog_index_description({}, { locale })}
   locale={locale}
   url={url}
   alternates={alternates}
@@ -72,9 +72,9 @@ const posts = allPosts
               <div class="mt-4">
                 <a
                   href={postUrl}
-                  class="inline-flex items-center text-sm font-medium text-primary hover:underline"
+                  class="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
                 >
-                  {m.common_read_more({}, { locale })} →
+                  {m.common_read_more({}, { locale })} <span class="inline-block rtl:rotate-180">→</span>
                 </a>
               </div>
             </article>

@@ -13,12 +13,16 @@ const de_common_close = /** @type {(inputs: Common_CloseInputs) => LocalizedStri
 	return /** @type {LocalizedString} */ (`Schließen`)
 };
 
+const fr_common_close = /** @type {(inputs: Common_CloseInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Fermer`)
+};
+
 const fa_common_close = /** @type {(inputs: Common_CloseInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`بستن`)
 };
 
-const fr_common_close = /** @type {(inputs: Common_CloseInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Fermer`)
+const ar_common_close = /** @type {(inputs: Common_CloseInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`إغلاق`)
 };
 
 /**
@@ -27,13 +31,14 @@ const fr_common_close = /** @type {(inputs: Common_CloseInputs) => LocalizedStri
 * | "Close" |
 *
 * @param {Common_CloseInputs} inputs
-* @param {{ locale?: "en" | "de" | "fa" | "fr" }} options
+* @param {{ locale?: "en" | "de" | "fr" | "fa" | "ar" }} options
 * @returns {LocalizedString}
 */
-export const common_close = /** @type {((inputs?: Common_CloseInputs, options?: { locale?: "en" | "de" | "fa" | "fr" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Common_CloseInputs, { locale?: "en" | "de" | "fa" | "fr" }, {}>} */ ((inputs = {}, options = {}) => {
+export const common_close = /** @type {((inputs?: Common_CloseInputs, options?: { locale?: "en" | "de" | "fr" | "fa" | "ar" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Common_CloseInputs, { locale?: "en" | "de" | "fr" | "fa" | "ar" }, {}>} */ ((inputs = {}, options = {}) => {
 	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
 	if (locale === "de") return de_common_close(inputs)
-	if (locale === "fa") return fa_common_close(inputs)
 	if (locale === "fr") return fr_common_close(inputs)
+	if (locale === "fa") return fa_common_close(inputs)
+	if (locale === "ar") return ar_common_close(inputs)
 	return en_common_close(inputs)
 });

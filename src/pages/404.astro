@@ -3,9 +3,11 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { DEFAULT_LOCALE, LOCALES, LOCALE_METADATA, type Locale } from '@/i18n/locales';
 import { localizeHref } from '@/i18n/paths';
 import { getPageUrl } from '@/libs/content/service';
+import { siteConfig } from '@/libs/config/site';
 import * as m from '@/paraglide/messages';
 
 const locale: Locale = DEFAULT_LOCALE;
+const siteName = siteConfig.name;
 
 const alternates = Object.fromEntries(
   LOCALES.map((loc) => [loc, loc === DEFAULT_LOCALE ? '/404' : `/${loc}/404`])
@@ -26,10 +28,12 @@ const i18nData = Object.fromEntries(
         homeHref: await getPageUrl('home', loc),
         aboutHref: await getPageUrl('about', loc),
         featuresHref: await getPageUrl('features', loc),
+        pricingHref: await getPageUrl('pricing', loc),
         blogHref: loc === DEFAULT_LOCALE ? '/blog' : `/${loc}/blog`,
         navHome: m.nav_home({}, { locale: loc }),
         navAbout: m.nav_about({}, { locale: loc }),
         navFeatures: m.nav_features({}, { locale: loc }),
+        navPricing: m.nav_pricing({}, { locale: loc }),
         navBlog: m.nav_blog({}, { locale: loc }),
         dir: LOCALE_METADATA[loc].dir,
         lang: LOCALE_METADATA[loc].htmlLang,
@@ -78,7 +82,7 @@ const i18nData = Object.fromEntries(
     </p>
   </div>
 
-  <script define:vars={{ LOCALES, DEFAULT_LOCALE, i18nData }}>
+  <script define:vars={{ LOCALES, DEFAULT_LOCALE, i18nData, siteName }}>
     function updateNotFoundPage() {
       const pathname = window.location.pathname;
       const segments = pathname.split('/').filter(Boolean);
@@ -90,7 +94,7 @@ const i18nData = Object.fromEntries(
       // Update document attributes & title
       document.documentElement.lang = data.lang;
       document.documentElement.dir = data.dir;
-      document.title = data.title + ' | Astro i18n';
+      document.title = `${data.title} | ${siteName}`;
 
       // Update text nodes
       const titleEl = document.getElementById('not-found-title');
@@ -121,6 +125,10 @@ const i18nData = Object.fromEntries(
       document.querySelectorAll('[data-nav-link="features"]').forEach((el) => {
         el.setAttribute('href', data.featuresHref);
         el.textContent = data.navFeatures;
+      });
+      document.querySelectorAll('[data-nav-link="pricing"]').forEach((el) => {
+        el.setAttribute('href', data.pricingHref);
+        el.textContent = data.navPricing;
       });
       document.querySelectorAll('[data-nav-link="blog"]').forEach((el) => {
         el.setAttribute('href', data.blogHref);
